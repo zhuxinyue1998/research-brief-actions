@@ -2,9 +2,9 @@
 
 on:
   schedule:
-    # Default: 08:30 UTC. Run scripts/configure_project.py or ask your AI assistant
+    # Default: 09:30 Asia/Shanghai. Run scripts/configure_project.py or ask your AI assistant
     # to convert your local send time to UTC and update this cron expression.
-    - cron: "30 8 * * *"
+    - cron: "30 1 * * *"
   workflow_dispatch:
     inputs:
       days_back:
@@ -46,6 +46,7 @@ jobs:
       - name: Generate research brief
         env:
           SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+          RESEARCH_BRIEF_CONTACT_EMAIL: ${{ secrets.RESEARCH_BRIEF_CONTACT_EMAIL }}
           RESEARCH_BRIEF_FROM_EMAIL: ${{ secrets.RESEARCH_BRIEF_FROM_EMAIL }}
           RESEARCH_BRIEF_TO_EMAIL: ${{ secrets.RESEARCH_BRIEF_TO_EMAIL }}
           SMTP_HOST: ${{ secrets.SMTP_HOST }}
@@ -75,4 +76,3 @@ jobs:
             ZOTERO_FLAG="--zotero"
           fi
           python scripts/generate_research_brief.py --days-back "${DAYS_BACK}" ${EMAIL_FLAG} ${ZOTERO_FLAG}
-
